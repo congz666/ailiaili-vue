@@ -10,11 +10,9 @@
 			<el-form-item label="密码" :rules="[{ required: true, message: '密码不能为空'},]">
 				<el-input type="password" v-model="form.password"></el-input>
 			</el-form-item>
-			<!--
 	  	<el-form-item>
 				<GtPage @ok="ok"></GtPage>
 			</el-form-item>
-			-->
 			<el-form-item>
 				<el-button type="primary" @click="onSubmit">登录</el-button>
 				<el-button @click.native="onRegister">注册</el-button>
@@ -27,12 +25,12 @@
 <script src="http://static.geetest.com/static/tools/gt.js"></script>
 <script>
 	import * as API from '@/api/login';
-	/*import GtPage from './GtPage.vue';*/
+	import GtPage from './GtPage.vue';
 	export default {
 		name: 'Login',
 		data() {
 			return {
-				okk: 1,
+				okk: 0,
 				form: {
 					user_name: '',
 					password: '',
@@ -69,16 +67,16 @@
 
 					}).catch((error) => {
 						this.$notify.error({
-							title: '登录失败惹',
+							title: '登录失败',
 							message: error,
 						});
 					});
-				}/*else{
+				}else{
 					this.$notify.error({
 						title: '请验证',
 						message: '',
 					});
-				}*/
+				}
 			},
 			onRegister() {
 				this.$router.push({
@@ -89,7 +87,7 @@
 
 		comments: {},
 		components: {
-			/*GtPage,*/
+			GtPage,
 		},
 	};
 </script>

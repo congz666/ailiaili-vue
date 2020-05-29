@@ -13,6 +13,9 @@
             <el-input type="password" v-model="ruleForm.password" autocomplete="off"></el-input>
           </el-form-item>
           <el-form-item>
+            <GtPage @ok="ok"></GtPage>
+          </el-form-item>
+          <el-form-item>
             <el-button type="primary" @click="onSubmit('ruleForm')">提交</el-button>
             <el-button @click="resetForm('ruleForm')">重置</el-button>
           </el-form-item>
@@ -22,7 +25,8 @@
   </div>   
 </template>
 <script>
-	import * as API from '@/api/admin';
+  import * as API from '@/api/admin';
+  import GtPage from './GtPage.vue';
   export default {
     data() {
       var validatePass = (rule, value, callback) => {
@@ -38,6 +42,7 @@
         callback();
       };
       return {
+        okk: 0,
         ruleForm: {
           user_name:'',
           password:'',
@@ -53,7 +58,11 @@
       };
     },
     methods: {
-      onSubmit() {
+      ok(val) {
+				this.okk = val;
+			},
+      onSubmit() {	
+        if (this.okk == 1) {
 					API.AdminLogin(this.ruleForm).then((res) => {
 						if (res.status > 0) {
 							this.$notify.error({
@@ -77,12 +86,21 @@
 							title: '网络中断或服务器宕机',
 							message: error,
 						});
+          });
+        }else{
+					this.$notify.error({
+						title: '请验证',
+						message: '',
 					});
+				}
 			},
       resetForm(formName) {
         this.$refs[formName].resetFields();
       }
-    }
+    },
+    components: {
+			GtPage,
+		},
   }
 </script>
 <style>
